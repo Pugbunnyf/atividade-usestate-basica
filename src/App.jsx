@@ -1,122 +1,131 @@
-import { useState } from 'react'
-import heroImg from './assets/hero.png'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+function Contador() {
+  const [contador, setContador] = useState(0);
+
+  function aumentar() {
+    setContador((valorAnterior) => valorAnterior + 1);
+  }
+
+  function diminuir() {
+    setContador((valorAnterior) => valorAnterior - 1);
+  }
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+    <div>
+      <p>Valor atual: {contador}</p>
+      <button onClick={aumentar}>Aumentar</button>
+      <button onClick={diminuir}>Voltar um</button>
+    </div>
+  );
 }
 
-export default App
+function Aviso() {
+  const [visivel, setVisivel] = useState(false);
+
+  return (
+    <div>
+      <button onClick={() => setVisivel(!visivel)}>Alternar aviso</button>
+
+      {visivel && <p className="aviso">O aviso está visível.</p>}
+    </div>
+  );
+}
+
+function Saudacao() {
+  const [nome, setNome] = useState("");
+
+  return (
+    <div>
+      <input
+        value={nome}
+        onChange={(evento) => setNome(evento.target.value)}
+        placeholder="Digite seu nome"
+      />
+
+      <p>Olá, {nome || "visitante"}!</p>
+    </div>
+  );
+}
+
+function CartaoBoasVindas() {
+  const [nome, setNome] = useState("");
+  const [mostrarSaudacao, setMostrarSaudacao] = useState(true);
+
+  return (
+    <div className="cartao">
+      <input
+        value={nome}
+        onChange={(evento) => setNome(evento.target.value)}
+        placeholder="Digite seu nome"
+      />
+
+      <button onClick={() => setMostrarSaudacao(!mostrarSaudacao)}>
+        {mostrarSaudacao ? "Esconder saudação" : "Mostrar saudação"}
+      </button>
+
+      {mostrarSaudacao && <p className="saudacao">Olá, {nome || "visitante"}!</p>}
+    </div>
+  );
+}
+
+function ContadorMeta() {
+  const [contador, setContador] = useState(0);
+
+  function aumentar() {
+    setContador((valorAnterior) =>
+      valorAnterior === 10 ? valorAnterior : valorAnterior + 1
+    );
+  }
+
+  return (
+    <div>
+      <p>Valor atual: {contador}</p>
+      <button onClick={aumentar}>Aumentar</button>
+      <button onClick={() => setContador(0)}>Voltar a zero</button>
+
+      {contador === 10 && <p className="meta">Meta atingida!</p>}
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <div className="app">
+      <header className="cabecalho">
+        <h1>Missões com useState</h1>
+        <p>Estado em React: contador, aviso, campo de texto e cartão.</p>
+      </header>
+
+      <main>
+        <section className="missao">
+          <h2>Missão 1 — Contador</h2>
+          <Contador />
+        </section>
+
+        <section className="missao">
+          <h2>Missão 2 — Mostrar e esconder um aviso</h2>
+          <Aviso />
+        </section>
+
+        <section className="missao">
+          <h2>Missão 3 — Saudação com campo de texto</h2>
+          <Saudacao />
+        </section>
+
+        <section className="missao">
+          <h2>Desafio final — Cartão de boas-vindas</h2>
+          <CartaoBoasVindas />
+        </section>
+
+        <section className="missao">
+          <h2>Desafio extra — Contador com meta</h2>
+          <ContadorMeta />
+        </section>
+      </main>
+    </div>
+  );
+}
+
+export default App;
